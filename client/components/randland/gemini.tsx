@@ -1,55 +1,13 @@
 function getRandomLandmark() {
     const landmarks = [
-        "Royce Hall",
-        "Powell Library",
-        "Janss Steps",
-        "Dickson Court North",
-        "Dickson Court South",
-        "Bruin Bear",
-        "Inverted Fountain (Janss Steps Fountain)",
-        "Bruin Walk",
-        "Pauley Pavilion",
-        "Franklin D. Murphy Sculpture Garden",
-        "Kerckhoff Hall",
-        "Botanical Gardens",
-        "Schoenberg Music Building",
-        "Fowler Museum",
-        "Mildred E. Mathias Botanical Garden",
-        "James West Alumni Center",
-        "UCLA Store (Ackerman Union)",
-        "Young Research Library",
-        "Murphy Hall",
-        "Carnesale Commons",
-        "UCLA School of Law",
-        "Geffen Playhouse",
-        "UCLA Medical Center",
-        "Franz Hall",
-        "Boelter Hall",
-        "Engineering VI Building",
-        "Haines Hall",
-        "Anderson School of Management",
-        "UCLA Meteorite Gallery",
-        "Court of Sciences",
-        "UCLA Meteorite Collection in Geology Building",
-        "UCLA Terasaki Life Sciences Building",
-        "UCLA Marina Aquatic Center",
-        "Macgowan Hall",
-        "UCLA Police Department",
-        "Moore Hall",
-        "Public Affairs Building",
-        "UCLA Film & Television Archive",
-        "Rieber Hall",
-        "Rieber Vista",
-        "Sunset Canyon Recreation Center",
-        "Drake Stadium",
-        "John Wooden Center",
-        "UCLA Lake Arrowhead Conference Center",
-        "UCLA Guest House",
-        "North Athletic Field",
-        "UCLA Tennis Center",
-        "UCLA Faculty Center",
-        "Pauley Pavilion Statue Garden",
-        "Strathmore Building"
+        "sculptureGarden",
+        "bruinStatue",
+        "royceHall",
+        "powellLibrary",
+        "pauleyPavilion",
+        "invertedFountain",
+        "janssSteps",
+        "murphyHall",
     ];
     const randomLandmark = landmarks[Math.floor(Math.random() * landmarks.length)];
     return randomLandmark;
@@ -66,15 +24,19 @@ async function run() {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-      const prompt = `Give me a riddle on how to find a landmark. 
+      const prompt = `Give me a riddle on how to find a landmark at UCLA. Include a historical fact about it.
       Don't include the name of it in the riddle, but tell me the name of the landmark at the end. 
-      Also, don't make it too verbose, keep it simple. Give me the coordinates of the landmark as well.
+      Also, don't make it too verbose, keep it simple.
+      say "find me" at the end. response in a json string in this format: 
+      {"riddle": "riddle here", "landmark": "landmark here"}
+      please make the landmark in the json string the same format as the one i give you.
       The landmark is ${randomLandmark}.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
     console.log(text);
+    return text;
 }
 
 run();
