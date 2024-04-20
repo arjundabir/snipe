@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import LoginButton from "./LoginButton";
 import dynamic from "next/dynamic";
+import Form from "./Form";
 
 const World = dynamic(() => import("../ui/globe").then((m) => m.World), {
   ssr: false,
@@ -415,13 +415,13 @@ export function GlobeDemo() {
             </h2>
             <p
               style={{ position: "relative", zIndex: 1000 }}
-              className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto mt-2"
+              className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto my-2"
             >
               The Ultimate Campus Game.
             </p>
-            <div className="flex justify-center mt-4 pt-10">
-              <LoginButton />
-            </div>
+            <Form />
+
+            {/* <LoginButton /> */}
           </motion.div>
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
