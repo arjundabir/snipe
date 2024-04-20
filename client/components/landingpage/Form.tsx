@@ -1,43 +1,115 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { setCookie } from "cookies-next";
+
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
+const fetchLocation = () => {
+  return new Promise<Location>((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          resolve({ latitude, longitude }); // Resolve the promise with the coordinates
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          reject(error); // Reject the promise if there's an error
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+      reject(new Error("Geolocation is not supported by this browser."));
+    }
+  });
+};
 
 const Form = () => {
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+
+  const [accessGranted, setAccess] = useState(false);
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const nameInput = form.elements.namedItem("name") as HTMLInputElement;
     const sessionInput = form.elements.namedItem("session") as HTMLInputElement;
-    router.push(`/game/${sessionInput.value}?name=${nameInput.value}`);
+    const data = await fetch("/api/user", {
+      method: "POST",
+      body: JSON.stringify({
+        name: nameInput.value,
+        session: sessionInput.value,
+        latitude: lat,
+        longitude: lng,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const response = await data.json();
+    setCookie("session", nameInput.value);
 
-    // Handle form submission logic here
+    router.push(`/game/${sessionInput.value}?name=${nameInput.value}`);
   };
+
+  const handleClick = async () => {
+    setAccess(true);
+    try {
+      const { latitude, longitude } = await fetchLocation();
+      setLat(latitude);
+      setLng(longitude);
+    } catch (error) {
+      console.error("Failed to fetch location:", error);
+    }
+  };
+
   return (
     <div className="flex justify-center">
-      <form
-        className="flex flex-col space-y-4 max-w-md w-[20rem]"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          placeholder="Enter your Name"
-          name="name"
-          className="input input-ghost w-full max-w-xs"
-          required
-        />
+      {!accessGranted ? (
+        <>
+          <button className="btn btn-success" onClick={handleClick}>
+            Grant Access
+          </button>
+        </>
+      ) : (
+        <>
+          {" "}
+          <form
+            className="flex flex-col space-y-4 max-w-md w-[20rem]"
+            onSubmit={handleSubmit}
+          >
+            <input
+              type="text"
+              placeholder="Enter your Name"
+              name="name"
+              className="input input-ghost w-full max-w-xs"
+              required
+            />
 
-        <input
-          type="text"
-          placeholder="Enter Session"
-          name="session"
-          className="input input-ghost w-full max-w-xs"
-          required
-        />
+            <input
+              type="text"
+              placeholder="Enter Session"
+              name="session"
+              className="input input-ghost w-full max-w-xs"
+              value="LAHACKS"
+              disabled
+            />
 
-        <button className="btn btn-[#000B43]" type="submit">
-          Join the Game!
-        </button>
-      </form>
+            <button
+              className="btn btn-[#000B43]"
+              type="submit"
+              disabled={lat == 0}
+            >
+              {lat == 0 ? "Waiting for Location" : "Join the Game!"}
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 };

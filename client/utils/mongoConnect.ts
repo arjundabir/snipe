@@ -7,39 +7,55 @@ export async function initMongo() {
     } catch (error) {
         console.error("Error connecting to MongoDB:", error);
     }
-
 }
 
 const userSchema = new mongoose.Schema({
-    name: {type:String, unique: true},
+    name: { type: String, unique: true },
     session: String,
+    location: {
+        lat: Number,
+        lng: Number
+    },
+    points: Number
 });
 
 const User = mongoose.models.users || mongoose.model('users', userSchema);
 
-export async function addUser(name: string, session: string) {
+export async function addUser(name: string, session: string, lat:Number, lng: Number) {
     try {
-        const newUser = new User({ name, session });
+        const newUser = new User({ name, session, location: { lat, lng }, points:0 });
         await newUser.save();
         console.log("User added successfully:", newUser);
     } catch (error) {
-        // Check if the error is due to a MongoDB duplicate key error (error code 11000)
             try {
-                // Attempt to find by name and update the session if it's different
+                // Update the user if the name already exists, regardless of session
                 const updatedUser = await User.findOneAndUpdate(
-                    { name, session: { $ne: session } }, // find a user with the same name but a different session
-                    { $set: { session: session } }, // update the session field
-                    { new: true } // options: return the updated document
+                    { name }, // Only check for name to identify the user
+                    { $set: { session: session, location: { lat, lng } } },
+                    { new: true, upsert: true } // options: return the updated document and create if it doesn't exist
                 );
                 if (updatedUser) {
                     console.log("User session updated successfully:", updatedUser);
                 } else {
-                    console.log("No update needed, session is already up-to-date.");
+                    console.log("User was not found or no updates were needed.");
                 }
             } catch (updateError) {
                 console.error("Error updating user session:", updateError);
             }
-
-    }
+        } 
 }
 
+
+export async function updateLocation(name: string, session: string, lat:Number, lng: Number){
+    try {
+                // Update the location if the same user and session are found
+                const updatedUser = await User.findOneAndUpdate(
+                    { name, session }, // Match user and session
+                    { $set: { 'location.lat': lat, 'location.lng': lng } }, // Update location fields
+                    { new: true } // Return the updated document
+                );
+                console.log("User location updated successfully:", updatedUser);
+            } catch (updateError) {
+                console.error("Error updating user location:", updateError);
+            }
+}
