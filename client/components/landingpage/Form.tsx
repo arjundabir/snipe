@@ -13,7 +13,7 @@ const Form = () => {
     // Handle form submission logic here
   };
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-4">
       <form
         className="flex flex-col space-y-4 max-w-md w-[20rem]"
         onSubmit={handleSubmit}
