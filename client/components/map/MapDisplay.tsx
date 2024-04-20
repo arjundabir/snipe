@@ -58,14 +58,14 @@ function MapDisplay() {
     useEffect(() => {
       run()
         .then(result => {
-          setGeminiResult(result);
-          console.log(result);
+          const parsed_result = JSON.parse(result);
+          const riddle = parsed_result.riddle;
+          const landmark = parsed_result.landmark;
+          console.log(riddle, landmark);
         })
-        .catch(error => {
-          console.error('Error from Gemini:', error);
-        });
     }, []); // Empty dependency array ensures this runs only once on mount
   
+    
     // Effect for loading the map and adding circles
     useEffect(() => {
       loader.load().then(() => {

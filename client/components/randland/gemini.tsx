@@ -29,12 +29,11 @@ export async function run() {
       Also, don't make it too verbose, keep it simple.
       say "find me" at the end. response in a json string in this format: 
       {"riddle": "riddle here", "landmark": "landmark here"}
-      please make the landmark in the json string the same format as the one i give you.
+      please make the landmark in the json string the same format and case as the one i give you.
       The landmark is ${randomLandmark}.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    console.log(text);
     return text;
 }
