@@ -18,7 +18,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 // Access your API key as an environment variable (see "Set up your API key" above)
 const genAI = new GoogleGenerativeAI('AIzaSyCik3GAQnGnckRKhQjmx_RIGEs4jDQBj3A');
 
-async function run() {
+export async function run() {
     const randomLandmark = getRandomLandmark();
 
     // For text-only input, use the gemini-pro model
@@ -38,5 +38,3 @@ async function run() {
     console.log(text);
     return text;
 }
-
-run();

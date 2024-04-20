@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import Leaderboard from './Leaderboard';
 import Alerts from './Alerts';
+import { run } from '../randland/gemini';
 
 
 const loader = new Loader({
@@ -46,48 +47,60 @@ const landmarks = {
 
 
 function MapDisplay() {
-  const mapContainerRef = useRef(null);
-
-  function getRandomArbitrary(min: number, max: number) {
-    return Math.random() * (max - min) + min;
-  }
-    
-  // needs to take a landmark as a parameter
-  useEffect(() => {
-    loader.load().then(() => {
-      if (mapContainerRef.current) {
-        const map = new google.maps.Map(mapContainerRef.current, mapOptions);
-        for (const city in landmarks) {
-          new google.maps.Circle({
-            strokeColor: "#1450db",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#6080b8",
-            fillOpacity: 0.35,
-            map: map,
-            
-            center: {
+    const mapContainerRef = useRef(null);
+    const [geminiResult, setGeminiResult] = useState(null); // State to store the result from run()
+  
+    function getRandomArbitrary(min: number, max: number) {
+      return Math.random() * (max - min) + min;
+    }
+  
+    // Effect for running the gemini function
+    useEffect(() => {
+      run()
+        .then(result => {
+          setGeminiResult(result);
+          console.log(result);
+        })
+        .catch(error => {
+          console.error('Error from Gemini:', error);
+        });
+    }, []); // Empty dependency array ensures this runs only once on mount
+  
+    // Effect for loading the map and adding circles
+    useEffect(() => {
+      loader.load().then(() => {
+        if (mapContainerRef.current) {
+          const map = new google.maps.Map(mapContainerRef.current, mapOptions);
+          for (const city in landmarks) {
+            new google.maps.Circle({
+              strokeColor: "#1450db",
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: "#6080b8",
+              fillOpacity: 0.35,
+              map: map,
+              center: {
                 lat: landmarks[city].center.lat + getRandomArbitrary(-0.0008, 0.0008),
                 lng: landmarks[city].center.lng + getRandomArbitrary(-0.0008, 0.0008)
               },
-            radius: 200,
-          });
+              radius: 200,
+            });
+          }
         }
-      }
-    });
-  }, []);
-
-  return (
-    <div className="relative h-screen"> 
-      <div className="w-full h-full border z-0" ref={mapContainerRef}>
-        {/* Google Map occupies full container */}
+      });
+    }, []); // This effect also should only run once
+  
+    return (
+      <div className="relative h-screen">
+        <div className="w-full h-full border z-0" ref={mapContainerRef}>
+          {/* Google Map occupies full container */}
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 flex p-2 z-10">
+          <Alerts />
+          <Leaderboard />
+        </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 flex p-2 z-10">
-        <Alerts/>
-        <Leaderboard/>
-      </div>
-    </div>
-  );
-}
-
-export default MapDisplay;
+    );
+  }
+  
+  export default MapDisplay;
