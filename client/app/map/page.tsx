@@ -3,7 +3,7 @@ import BentoGrid from "@/components/map/MapDisplay";
 
 export default function Home() {
   return (
-    <main className="container mx-auto h-screen">
+    <main className="w-screen h-screen">
       <BentoGrid/>
     </main>
   );
