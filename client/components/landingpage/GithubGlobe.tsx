@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { NavbarDemo } from "./Navbar";
+import LoginButton from "./LoginButton";
 import dynamic from "next/dynamic";
+import { BackgroundBeams } from "../ui/background-beams";
 
-const World = dynamic(() => import("./globe").then((m) => m.World), {
+const World = dynamic(() => import("../ui/globe").then((m) => m.World), {
   ssr: false,
 });
 
@@ -396,34 +397,26 @@ export function GlobeDemo() {
   ];
 
   return (
-    <div className="flex flex-row items-center justify-center py-20 h-screen md:h-auto dark:bg-black bg-white relative w-full">
-      <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-full md:h-[40rem] px-4">
-        <NavbarDemo />
+    <div className="flex flex-row items-center justify-center py-20 h-screen md:h-auto bg-white dark:bg-black relative w-full">
+      <div className="max-w-7xl w-full h-full md:h-[40rem] px-4 mx-auto">
+      <BackgroundBeams className="absolute inset-0 z-0" />
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 1,
-          }}
-          className="div"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center"
         >
-          <h2 className="text-center text-6xl md:text-6xl font-bold text-black dark:text-white">
+          <h2 style={{ position: 'relative', zIndex: 1000 }} className="text-6xl md:text-6xl font-bold text-black dark:text-white">
             Snipe
           </h2>
-          <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto">
+          <p style={{ position: 'relative', zIndex: 1000 }} className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto mt-2">
             The Ultimate Campus Game.
           </p>
-        </motion.div>
-        <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
-        <div className="absolute w-full -bottom-20 h-72 md:h-full z-10">
-          <World data={sampleArcs} globeConfig={globeConfig} />;
+        <div className="flex justify-center mt-4 pt-10">
+          <LoginButton/>
         </div>
+        </motion.div>
+        <World data={sampleArcs} globeConfig={globeConfig} />
       </div>
     </div>
   );
