@@ -1,3 +1,4 @@
+import { addUser, initMongo } from "@/utils/mongoConnect";
 import Link from "next/link";
 import React from "react";
 
@@ -7,6 +8,9 @@ interface Props {
 }
 
 const page = ({ params: { slug }, searchParams: { name } }: Props) => {
+  initMongo();
+  addUser(name, slug[0]);
+
   return slug == "LAHACKS" ? (
     <div className="h-screen w-screen ">
       <div className="w-screen h-10 bg-white">hello world</div>
