@@ -399,7 +399,6 @@ export function GlobeDemo() {
   return (
     <div className="flex flex-row items-center justify-center py-20 h-screen md:h-auto bg-white dark:bg-black relative w-full">
       <div className="max-w-7xl w-full h-full md:h-[40rem] px-4 mx-auto">
-      <BackgroundBeams className="absolute inset-0 z-0" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
