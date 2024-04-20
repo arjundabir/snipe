@@ -1,9 +1,9 @@
-import { GlobeDemo } from "@/components/landingpage/GithubGlobe";
+import React from "react";
 
 export default function Home() {
   return (
     <main className="container mx-auto h-screen">
-      <GlobeDemo/>
+      hello world
     </main>
   );
 }
