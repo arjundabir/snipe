@@ -3,7 +3,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import LoginButton from "./LoginButton";
 import dynamic from "next/dynamic";
-import { BackgroundBeams } from "../ui/background-beams";
 
 const World = dynamic(() => import("../ui/globe").then((m) => m.World), {
   ssr: false,
