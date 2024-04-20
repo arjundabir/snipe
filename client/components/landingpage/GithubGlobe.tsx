@@ -397,26 +397,33 @@ export function GlobeDemo() {
   ];
 
   return (
-    <div className="flex flex-row items-center justify-center py-20 h-screen md:h-auto bg-white dark:bg-black relative w-full">
-      <div className="max-w-7xl w-full h-full md:h-[40rem] px-4 mx-auto">
-      <BackgroundBeams className="absolute inset-0 z-0" />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-center"
-        >
-          <h2 style={{ position: 'relative', zIndex: 1000 }} className="text-6xl md:text-6xl font-bold text-black dark:text-white">
-            Snipe
-          </h2>
-          <p style={{ position: 'relative', zIndex: 1000 }} className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto mt-2">
-            The Ultimate Campus Game.
-          </p>
-        <div className="flex justify-center mt-4 pt-10">
-          <LoginButton/>
+    <div className="h-screen w-full overflow-y-hidden overscroll-none">
+      <div className="flex flex-row items-center justify-center pt-20 h-screen md:h-auto bg-white dark:bg-black relative w-full">
+        <div className="max-w-7xl w-full h-full md:h-[40rem] px-4 mx-auto ">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-center"
+          >
+            <h2
+              style={{ position: "relative", zIndex: 1000 }}
+              className="text-6xl md:text-6xl font-bold text-black dark:text-white"
+            >
+              Snipe
+            </h2>
+            <p
+              style={{ position: "relative", zIndex: 1000 }}
+              className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto mt-2"
+            >
+              The Ultimate Campus Game.
+            </p>
+            <div className="flex justify-center mt-4 pt-10">
+              <LoginButton />
+            </div>
+          </motion.div>
+          <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
-        </motion.div>
-        <World data={sampleArcs} globeConfig={globeConfig} />
       </div>
     </div>
   );
