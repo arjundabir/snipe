@@ -1,9 +1,9 @@
-import Image from "next/image";
+import { GlobeDemo } from "@/components/ui/GithubGlobe";
 
 export default function Home() {
   return (
     <main className="container">
-      <div>snipe</div>
+      <GlobeDemo/>
     </main>
   );
 }
