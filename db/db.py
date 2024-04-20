@@ -5,9 +5,9 @@ from geojson import Point
 client = MongoClient('mongodb+srv://snipeadmin:snipelahacks@snipedb.jgilvjy.mongodb.net/')
 
 # get the db instance
-db_instance = client.get_database('snipe')
+db = client.get_database('snipe')
 
-collection = db_instance['locations']
+location = db['locations']
 
 test_location = Point((-73.856077, 40.848447))
 
@@ -21,8 +21,15 @@ data.update({
 })
 
 # insert a document to the db
-result = collection.insert_one(data)
-print(result.inserted_id)
 
-# delete_result = collection.delete_one({"_id": "662353f660e176b419130052"})
+# result = location.insert_one(data)
+# print(result.inserted_id)
+
+# delete_result = location.delete_one({"_id": "662353f660e176b419130052"})
 # print(delete_result.deleted_count)
+
+x = location.find()
+
+for i in x:
+    print(i)
+
