@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
+import Leaderboard from './Leaderboard';
+import Alerts from './Alerts';
 
 
 const loader = new Loader({
@@ -11,7 +13,7 @@ const loader = new Loader({
 });
 
 const mapOptions = {
-  center: { lat: 34.0699, lng: -118.4438 }, // Center of the US
+  center: { lat: 34.0699, lng: -118.4438 },
   zoom: 16,
 };
 
@@ -21,7 +23,7 @@ const landmarks = {
   },
 };
 
-function BentoGrid() {
+function MapDisplay() {
   const mapContainerRef = useRef(null);
 
   function getRandomArbitrary(min: number, max: number) {
@@ -35,16 +37,16 @@ function BentoGrid() {
         const map = new google.maps.Map(mapContainerRef.current, mapOptions);
         for (const city in landmarks) {
           new google.maps.Circle({
-            strokeColor: "#FF0000",
+            strokeColor: "#1450db",
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: "#FF0000",
+            fillColor: "#6080b8",
             fillOpacity: 0.35,
             map: map,
             
             center: {
-                lat: landmarks[city].center.lat + getRandomArbitrary(-0.0009, 0.0009),
-                lng: landmarks[city].center.lng + getRandomArbitrary(-0.0009, 0.0009)
+                lat: landmarks[city].center.lat + getRandomArbitrary(-0.0008, 0.0008),
+                lng: landmarks[city].center.lng + getRandomArbitrary(-0.0008, 0.0008)
               },
             radius: 200,
           });
@@ -58,19 +60,12 @@ function BentoGrid() {
       <div className="w-full h-full border z-0" ref={mapContainerRef}>
         {/* Google Map occupies full container */}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 flex p-2 z-10 bg-opacity-80 bg-black">
-        <div className="flex-1 p-5 border border-gray-300 rounded-l-lg text-white">
-          Commentator Box
-        </div>
-        <div className="w-1/4 p-5 border border-gray-300 rounded-r-lg text-white">
-          <h2 className="text-lg font-bold text-center">Leaderboard</h2>
-          <ul>
-            {/* Sample leaderboard data here */}
-          </ul>
-        </div>
+      <div className="absolute bottom-0 left-0 right-0 flex p-2 z-10">
+        <Alerts/>
+        <Leaderboard/>
       </div>
     </div>
   );
 }
 
-export default BentoGrid;
+export default MapDisplay;
