@@ -407,9 +407,11 @@ export function GlobeDemo() {
           >
             <h2
               style={{ position: "relative", zIndex: 1000 }}
-              className="text-6xl md:text-6xl font-bold text-black dark:text-white"
+              className="text-6xl md:text-6xl font-bold text-black dark:text-white "
             >
-              Snipe
+              <span className="bg-gradient-to-r from-primary to-white inline-block text-transparent bg-clip-text">
+                Snipe
+              </span>
             </h2>
             <p
               style={{ position: "relative", zIndex: 1000 }}
