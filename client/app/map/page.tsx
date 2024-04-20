@@ -1,9 +1,10 @@
 import React from "react";
+import MapDisplay from "@/components/map/MapDisplay";
 
 export default function Home() {
   return (
-    <main className="container mx-auto h-screen">
-      hi
+    <main className="w-screen h-screen">
+      <MapDisplay/>
     </main>
   );
 }
