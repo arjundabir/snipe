@@ -1,12 +1,24 @@
-import React from 'react';
+"use client";
+import React from "react";
+import { BackgroundGradient } from "../ui/background-gradient";
 
-function Alerts({ riddle }) {
+export function Alerts({ riddle="Loading Riddle..." }) {
   return (
-    <div className="flex-1 p-5 border border-gray-300 rounded-l-lg text-white py-12 bg-stone-800/95">
-        <h2 className="text-lg font-bold text-center">Riddle</h2>
-        <p className="text-center text-sm mt-2">{riddle}</p>
+    <div className="max-w-sm max-h-sm">
+      <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-5 bg-white dark:bg-zinc-900">
+        <div className="max-h-25 overflow-y-scroll">
+            <p className="text-base text-center sm:text-xl text-black mt-4 dark:text-neutral-200">
+            Find Me...
+            </p>
+
+            <p className="text-center text-sm p-5 text-white mt-0 mb-auto">
+                {riddle}
+            </p>
+        </div>
+      </BackgroundGradient>
     </div>
   );
 }
+
 
 export default Alerts;
