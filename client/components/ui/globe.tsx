@@ -11,6 +11,7 @@ declare module "@react-three/fiber" {
   }
 }
 
+/* eslint-disable react-hooks/exhaustive-deps */
 extend({ ThreeGlobe });
 
 const RING_PROPAGATION_SPEED = 3;
@@ -96,7 +97,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
       _buildData();
       _buildMaterial();
     }
-  }, [globeRef.current]);
+  }, []);
 
   const _buildMaterial = () => {
     if (!globeRef.current) return;

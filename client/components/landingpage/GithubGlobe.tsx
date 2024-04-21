@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import LoginButton from "./LoginButton";
 import dynamic from "next/dynamic";
-import { BackgroundBeams } from "../ui/background-beams";
+import Form from "./Form";
 
 const World = dynamic(() => import("../ui/globe").then((m) => m.World), {
   ssr: false,
@@ -408,19 +407,21 @@ export function GlobeDemo() {
           >
             <h2
               style={{ position: "relative", zIndex: 1000 }}
-              className="text-6xl md:text-6xl font-bold text-black dark:text-white"
+              className="text-6xl md:text-6xl font-bold text-black dark:text-white "
             >
-              Snipe
+              <span className="text-white inline-block text-transparent bg-clip-text">
+                Journ<span className="bg-gradient-to-r from-primary to-cyan-300 inline-block text-transparent bg-clip-text">AI</span>
+              </span>
             </h2>
             <p
               style={{ position: "relative", zIndex: 1000 }}
-              className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto mt-2"
+              className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto my-2"
             >
-              The Ultimate Campus Game.
+              The Ultimate Campus Explorer.
             </p>
-            <div className="flex justify-center mt-4 pt-10">
-              <LoginButton />
-            </div>
+            <Form />
+
+            {/* <LoginButton /> */}
           </motion.div>
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>

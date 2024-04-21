@@ -1,7 +1,13 @@
 {
   "dependencies": {
+    "@google/generative-ai": "^0.7.1",
+    "@googlemaps/js-api-loader": "^1.16.6",
     "clsx": "^2.1.0",
     "framer-motion": "^11.1.7",
+    "mini-svg-data-uri": "^1.4.4",
     "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.55.7"
   }
 }
