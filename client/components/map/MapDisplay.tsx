@@ -70,6 +70,8 @@ function MapDisplay() {
     
     // Effect for loading the map and adding circles
     useEffect(() => {
+      let marker = null;
+      let watchId = null;
         loader.load().then(() => {
           console.log("Gemini result:", geminiResult);
           if (mapContainerRef.current && geminiResult && landmarks[geminiResult]) {
@@ -89,11 +91,46 @@ function MapDisplay() {
               radius: 300,
             });
             console.log("Circle center adjusted to:", adjustedCenter);
-          } else {
-            console.error("Invalid geminiResult or landmarks entry missing:", geminiResult);
+
+            // Get user's location
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition((position) => {
+                const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                };
+                
+                // If a marker already exists, remove it
+                if (marker) {
+                  marker.setMap(null);
+                }
+                
+                // Add a marker for the user's location
+                marker = new google.maps.Marker({
+                  position: pos,
+                  map: map,
+                  title: "Your Location",
+                });
+
+                // Center the map on the user's location
+            map.setCenter(pos);
+          }, () => {
+            console.error("Error: The Geolocation service failed.");
+          });
+        } else {
+          console.error("Error: Your browser doesn't support geolocation.");
+        }
+      } else {
+        console.error("Invalid geminiResult or landmarks entry missing:", geminiResult);
           }
-        });
-      }, [geminiResult]);
+  });
+  // Clean up the geolocation watch when the component unmounts
+  return () => {
+    if (watchId !== null) {
+      navigator.geolocation.clearWatch(watchId);
+    }
+  };
+}, [geminiResult]);
       
     return (
       <div className="relative h-screen">
