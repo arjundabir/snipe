@@ -16,7 +16,7 @@ export function SignupFormDemo() {
         Today.
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Don't miss the fun!
+        Dont miss the fun!
       </p>
 
       <div className="flex flex-col space-y-4 my-8">
