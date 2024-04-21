@@ -5,7 +5,7 @@ import { BackgroundGradient } from "../ui/background-gradient";
 export function Adventure() {
   return (
     <div>
-      <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
+      <BackgroundGradient className="rounded-[22px] max-w-sm line-clamp-7 p-4 sm:p-10 bg-white dark:bg-zinc-900">
       <img
           src="/cat2.jpg"
           alt="A cute cat"
@@ -18,9 +18,9 @@ export function Adventure() {
         </p>
 
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-        A circle will appear on your map. This circle contains a landmark that you need to find.
-        To help you identify the landmark, solve the riddle provided. The solution to the riddle 
-        is a hint about the landmark. Approach the landmark to win!
+        Utilizing Gemini AI, answer a short, 4 question survey. After analyzing your answers,
+        Gemini will tailor a personalized tour around campus based off of your preferences. 
+        Jump into an interactive AI enhanced adventure and learn more about popular UCLA landmarks!
         </p>
         <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
           <span>Interactive </span>
