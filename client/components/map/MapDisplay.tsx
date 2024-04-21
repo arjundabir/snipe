@@ -86,7 +86,7 @@ function MapDisplay() {
               fillOpacity: 0.35,
               map: map,
               center: adjustedCenter,
-              radius: 200,
+              radius: 300,
             });
             console.log("Circle center adjusted to:", adjustedCenter);
           } else {
@@ -100,7 +100,7 @@ function MapDisplay() {
         <div className="w-full h-full border z-0" ref={mapContainerRef}>
           {/* Google Map occupies full container */}
         </div>
-        <div className="absolute left-0 top-0 bottom-0 flex flex-col items-start justify-center p-2 z-10">
+        <div className="absolute left-0 bottom-0 w-screen flex flex-col items-start p-2 z-10">
             <Alerts riddle={riddle} />
             <Leaderboard />
         </div>
