@@ -5,6 +5,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import Leaderboard from './Leaderboard';
 import Alerts from './Alerts';
 import { run } from '../randland/gemini';
+import Link from 'next/link';
 
 
 const loader = new Loader({
@@ -208,15 +209,17 @@ const safeRiddle = riddle === null ? undefined : riddle;
                 {win ? (
         <div className='flex justify-center items-center absolute inset-0 z-20 w-screen h-screen bg-black/[0.8]'>
             <div className='bg-zinc-900 w-1/2 h-1/2 border border-zinc-400 rounded-lg flex flex-col justify-center items-center'>
-                <h6 className="text-white mt-10 text-6xl font-extrabold">
+                <h6 className="text-white text-center mt-10 text-6xl mx-5 font-extrabold">
                     You Found The
                 </h6>
-                <span className="text-6xl font-extrabold bg-gradient-to-r from-primary to-cyan-300 inline-block text-transparent bg-clip-text">
+                <span className="text-6xl mx-10  text-center font-extrabold bg-gradient-to-r from-primary to-cyan-300 inline-block text-transparent bg-clip-text">
                     {camelCaseToTitleCase(geminiResult)}
                 </span>
-                <button className="mt-10 py-2 px-4 bg-indigo-500	 hover:from-primary hover:to-cyan-300 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1" onClick={handleClick}>
-                    Play Again
-                </button>
+                <Link href={`/map`}>
+                  <button className="mt-10 py-2 px-4 bg-indigo-500 mb-6 hover:from-primary hover:to-cyan-300 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1 " onClick={handleClick}>
+                      Play Again
+                  </button>
+                </Link>
             </div>
         </div>
     ) : <></>}
