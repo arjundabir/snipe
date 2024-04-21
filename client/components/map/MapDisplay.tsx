@@ -49,6 +49,7 @@ const landmarks = {
 function MapDisplay() {
     const mapContainerRef = useRef(null);
     const [geminiResult, setGeminiResult] = useState(null); // State to store the result from run()
+    const [riddle, setRiddle] = useState(null); // State to store the riddle from run()
   
     function getRandomArbitrary(min: number, max: number) {
       return Math.random() * (max - min) + min;
@@ -62,6 +63,7 @@ function MapDisplay() {
           const riddle = parsed_result.riddle;
           const landmark = parsed_result.landmark;
           setGeminiResult(landmark)
+          setRiddle(riddle)
         })
     }, []); // Empty dependency array ensures this runs only once on mount
   
@@ -99,7 +101,7 @@ function MapDisplay() {
           {/* Google Map occupies full container */}
         </div>
         <div className="absolute bottom-0 left-0 right-0 flex p-2 z-10">
-          <Alerts />
+          <Alerts riddle={riddle} />
           <Leaderboard />
         </div>
       </div>
