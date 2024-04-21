@@ -1,5 +1,7 @@
 import Link from "next/link";
 import React from "react";
+import { ScavengerHunt } from "@/components/login/ScavengerHunt";
+import { Adventure } from "@/components/login/Adventure";
 
 interface Props {
   params: { slug: string };
@@ -22,22 +24,13 @@ const page = ({ params: { slug }, searchParams: { name } }: Props) => {
     </div>
   ) : (
     <>
-      <div className="w-screen h-screen flex flex-col justify-center items-center">
+      <div className="w-screen h-screen flex flex-row justify-center items-center">
+        <Link href={`/map`} className="mr-16">
+            <ScavengerHunt/>
+        </Link>
+            <Adventure/>
       <div className='flex flex-col justify-around items-center p-4 rounded-md m-4'>
-        <p className='text-xl underline font-bold'>How to play</p>
-        <div className='flex flex-col justify-around items-center mt-5'>
-          <p>A circle will appear on your map. This circle contains a landmark that you need to find.</p>
-          <p>To help you identify the landmark, solve the riddle provided. The solution to the riddle is a hint about the landmark.</p>
-          <p>Approach the landmark. You win when you are close enough to it!</p>
-        </div>
         <div>
-          <h1 className="font-medium text-2xl mt-10">
-            <Link href={`/map`}>
-              <span className="font-bold bg-gradient-to-r from-primary to-secondary inline-block text-transparent bg-clip-text border-b">
-                Start Game
-              </span>
-            </Link>
-          </h1>
           </div>
         </div>
       </div>
