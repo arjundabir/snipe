@@ -59,7 +59,7 @@ export default function Completion() {
     const timerChats = setInterval(() => {
       setDissappear(false);
       complete(
-        `give some fun facts about important landmarks at UCLA but don't say what the location is. Don't include more than 140 characters.`
+        `give some fun facts about ${landmarkKey}, important landmarks at UCLA but don't say what the location is. Don't include more than 140 characters.`
       );
     }, 20000);
 
