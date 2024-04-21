@@ -45,11 +45,6 @@ const landmarks = {
   },
 };
 
-function displayWinnerScreen(landmark: string) {
-  alert(`You found the ${landmark}!`);
-  window.location.reload();
-}
-
 
 interface Position{
   lat: number;
@@ -82,12 +77,36 @@ function isWithinRadius(playerPos: Position, locationCenter: Position): boolean 
 
 function MapDisplay() {
     const mapContainerRef = useRef(null);
-    const [geminiResult, setGeminiResult] = useState(null); // State to store the result from run()
+    const [geminiResult, setGeminiResult] = useState(); // State to store the result from run()
     const [riddle, setRiddle] = useState(null); // State to store the riddle from run()
-  
+    const [win, setWin] = useState(false);
+
     function getRandomArbitrary(min: number, max: number) {
       return Math.random() * (max - min) + min;
     }
+
+    function handleClick(){
+      setWin(false)
+      window.location.reload()
+    }
+
+    function camelCaseToTitleCase(camelCaseString: string) {
+      // Check if the input is a valid string
+      if (typeof camelCaseString !== 'string') {
+          console.error('Invalid input: expected a string');
+          return ''; // Return an empty string or any other default value
+      }
+  
+      // Add a space before each uppercase letter
+      const spacedString = camelCaseString.replace(/([A-Z])/g, (match, offset) => {
+          return offset === 0 ? match : ' ' + match;
+      });
+  
+      // Split the string into words and capitalize the first letter of each word
+      return spacedString.split(' ').map(word => {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }).join(' ');
+  }
   
     // Effect for running the gemini function
     useEffect(() => {
@@ -146,7 +165,7 @@ function MapDisplay() {
                 // If a marker already exists, remove it
                 
                 if (isWithinRadius(pos, correctLandmarkCenter)){
-                  displayWinnerScreen(geminiResult);
+                  setWin(true)
                 }
                 
                 // @ts-ignore
@@ -179,13 +198,30 @@ function MapDisplay() {
       navigator.geolocation.clearWatch(watchId);
     }
   };
-}, [geminiResult]);
+}, [geminiResult, win]);
 
 // @ts-ignore
 const safeRiddle = riddle === null ? undefined : riddle;
 
     return (
       <div className="relative h-screen">
+                {win ? (
+        <div className='flex justify-center items-center absolute inset-0 z-20 w-screen h-screen bg-black/[0.8]'>
+            <div className='bg-zinc-900 w-1/2 h-1/2 border border-zinc-400 rounded-lg flex flex-col justify-center items-center'>
+                <h6 className="text-white mt-10 text-6xl font-extrabold">
+                    You Found The
+                </h6>
+                <span className="text-6xl font-extrabold bg-gradient-to-r from-primary to-cyan-300 inline-block text-transparent bg-clip-text">
+                    {camelCaseToTitleCase(geminiResult)}
+                </span>
+                <button className="mt-10 py-2 px-4 bg-indigo-500	 hover:from-primary hover:to-cyan-300 text-white font-bold rounded-lg text-lg transition duration-300 ease-in-out transform hover:-translate-y-1" onClick={handleClick}>
+                    Play Again
+                </button>
+            </div>
+        </div>
+    ) : <></>}
+
+
         <div className="w-full h-full border z-0" ref={mapContainerRef}>
           {/* Google Map occupies full container */}
         </div>
