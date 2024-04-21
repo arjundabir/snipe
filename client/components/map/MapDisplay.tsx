@@ -98,7 +98,7 @@ function MapDisplay() {
 
             // Get user's location
             if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition((position) => {
+              navigator.geolocation.watchPosition((position) => {
                 const pos = {
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
