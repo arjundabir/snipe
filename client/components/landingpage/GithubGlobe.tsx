@@ -398,7 +398,7 @@ export function GlobeDemo() {
 
   return (
     <div className="h-screen w-full overflow-y-hidden overscroll-none">
-      <div className="flex flex-row items-center justify-center pt-20 h-screen md:h-auto bg-white dark:bg-black relative w-full">
+      <div className="flex flex-row items-center justify-center pt-20 h-screen md:h-auto bg-white relative w-full">
         <div className="max-w-7xl w-full h-full md:h-[40rem] px-4 mx-auto ">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -408,7 +408,7 @@ export function GlobeDemo() {
           >
             <h2
               style={{ position: "relative", zIndex: 1000 }}
-              className="text-6xl md:text-6xl font-bold text-black dark:text-white "
+              className="text-6xl md:text-6xl font-bold text-black  "
             >
               <span className="bg-gradient-to-r from-primary to-white inline-block text-transparent bg-clip-text">
                 Snipe
@@ -416,7 +416,7 @@ export function GlobeDemo() {
             </h2>
             <p
               style={{ position: "relative", zIndex: 1000 }}
-              className="text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mx-auto my-2"
+              className="text-base md:text-lg font-normal text-neutral-700  max-w-md mx-auto my-2"
             >
               The Ultimate Campus Game.
             </p>

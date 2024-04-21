@@ -3,7 +3,7 @@ import { GlobeDemo } from "@/components/landingpage/GithubGlobe";
 
 export default function Home() {
   return (
-    <main className="container mx-auto h-screen">
+    <main className="container mx-auto h-screen bg-white">
       <Checker />
       <GlobeDemo />
     </main>

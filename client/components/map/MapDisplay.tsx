@@ -102,11 +102,11 @@ function MapDisplay({ name, session }: Props) {
       });
     };
 
-    // const interval = setInterval(() => fetchData(), 2000);
+    const interval = setInterval(() => fetchData(), 2000);
 
-    // return () => {
-    //   clearInterval(interval);
-    // };
+    return () => {
+      clearInterval(interval);
+    };
   });
 
   return (
