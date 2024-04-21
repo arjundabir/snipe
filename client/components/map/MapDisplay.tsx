@@ -72,10 +72,10 @@ function MapDisplay({ name, session }: Props) {
 
             center: {
               lat:
-                landmarks[city].center.lat +
+                landmarks[city as keyof typeof landmarks].center.lat +
                 getRandomArbitrary(-0.0008, 0.0008),
               lng:
-                landmarks[city].center.lng +
+                landmarks[city as keyof typeof landmarks].center.lng +
                 getRandomArbitrary(-0.0008, 0.0008),
             },
             radius: 200,
