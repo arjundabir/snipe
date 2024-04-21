@@ -61,17 +61,21 @@ function MapDisplay() {
           const parsed_result = JSON.parse(result);
           const riddle = parsed_result.riddle;
           const landmark = parsed_result.landmark;
-          console.log(riddle, landmark);
+          setGeminiResult(landmark)
         })
     }, []); // Empty dependency array ensures this runs only once on mount
   
     
     // Effect for loading the map and adding circles
     useEffect(() => {
-      loader.load().then(() => {
-        if (mapContainerRef.current) {
-          const map = new google.maps.Map(mapContainerRef.current, mapOptions);
-          for (const city in landmarks) {
+        loader.load().then(() => {
+          console.log("Gemini result:", geminiResult);
+          if (mapContainerRef.current && geminiResult && landmarks[geminiResult]) {
+            const map = new google.maps.Map(mapContainerRef.current, mapOptions);
+            const adjustedCenter = {
+              lat: landmarks[geminiResult].center.lat + getRandomArbitrary(-0.0008, 0.0008),
+              lng: landmarks[geminiResult].center.lng + getRandomArbitrary(-0.0008, 0.0008)
+            };
             new google.maps.Circle({
               strokeColor: "#1450db",
               strokeOpacity: 0.8,
@@ -79,17 +83,16 @@ function MapDisplay() {
               fillColor: "#6080b8",
               fillOpacity: 0.35,
               map: map,
-              center: {
-                lat: landmarks[city].center.lat + getRandomArbitrary(-0.0008, 0.0008),
-                lng: landmarks[city].center.lng + getRandomArbitrary(-0.0008, 0.0008)
-              },
+              center: adjustedCenter,
               radius: 200,
             });
+            console.log("Circle center adjusted to:", adjustedCenter);
+          } else {
+            console.error("Invalid geminiResult or landmarks entry missing:", geminiResult);
           }
-        }
-      });
-    }, []); // This effect also should only run once
-  
+        });
+      }, [geminiResult]);
+      
     return (
       <div className="relative h-screen">
         <div className="w-full h-full border z-0" ref={mapContainerRef}>
