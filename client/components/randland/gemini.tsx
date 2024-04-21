@@ -35,5 +35,8 @@ export async function run() {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    return text;
+    const parsedText = JSON.parse(text);
+    parsedText.landmark = randomLandmark;
+    const newText = JSON.stringify(parsedText);
+    return newText;
 }
