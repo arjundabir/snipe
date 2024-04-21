@@ -6,7 +6,7 @@ export function ScavengerHunt() {
   return (
     <div>
       <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-white dark:bg-zinc-900">
-      <img
+        <img
           src="/cat.jpg"
           alt="A cute cat"
           height="400"
@@ -18,9 +18,10 @@ export function ScavengerHunt() {
         </p>
 
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-        A circle will appear on your map. This circle contains a landmark that you need to find.
-        To help you identify the landmark, solve the riddle provided. The solution to the riddle 
-        is a hint about the landmark. Approach the landmark to win!
+          A circle will appear on your map. This circle contains a landmark that
+          you need to find. To help you identify the landmark, solve the riddle
+          provided. The solution to the riddle is a hint about the landmark.
+          Approach the landmark to win!
         </p>
         <button className="rounded-full pl-4 pr-1 py-1 text-white flex items-center space-x-1 bg-black mt-4 text-xs font-bold dark:bg-zinc-800">
           <span>Explore </span>
