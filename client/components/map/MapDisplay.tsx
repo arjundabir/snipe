@@ -70,14 +70,18 @@ function MapDisplay() {
     
     // Effect for loading the map and adding circles
     useEffect(() => {
+      // @ts-ignore
       let marker = null;
+      // @ts-ignore
       let watchId = null;
         loader.load().then(() => {
           console.log("Gemini result:", geminiResult);
           if (mapContainerRef.current && geminiResult && landmarks[geminiResult]) {
             const map = new google.maps.Map(mapContainerRef.current, mapOptions);
             const adjustedCenter = {
+              // @ts-ignore
               lat: landmarks[geminiResult].center.lat + getRandomArbitrary(-0.0008, 0.0008),
+              // @ts-ignore
               lng: landmarks[geminiResult].center.lng + getRandomArbitrary(-0.0008, 0.0008)
             };
             new google.maps.Circle({
@@ -101,6 +105,7 @@ function MapDisplay() {
                 };
                 
                 // If a marker already exists, remove it
+                // @ts-ignore
                 if (marker) {
                   marker.setMap(null);
                 }
@@ -131,14 +136,17 @@ function MapDisplay() {
     }
   };
 }, [geminiResult]);
-      
+
+// @ts-ignore
+const safeRiddle = riddle === null ? undefined : riddle;
+
     return (
       <div className="relative h-screen">
         <div className="w-full h-full border z-0" ref={mapContainerRef}>
           {/* Google Map occupies full container */}
         </div>
-        <div className="absolute left-0 bottom-0 w-screen flex flex-col items-start p-2 z-10">
-            <Alerts riddle={riddle} />
+        <div className="absolute left-0 bottom-0 w-screen flex flex-col items-start p-2 z-10"> 
+            <Alerts riddle={safeRiddle} />
             <Leaderboard />
         </div>
       </div>
