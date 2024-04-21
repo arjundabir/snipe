@@ -1,15 +1,20 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState, useRef } from 'react';
-import { Loader } from '@googlemaps/js-api-loader';
-import Leaderboard from './Leaderboard';
-import Alerts from './Alerts';
+import React, { useEffect, useState, useRef } from "react";
+import { Loader } from "@googlemaps/js-api-loader";
+import Leaderboard from "./Leaderboard";
+import Alerts from "./Alerts";
+import { fetchLocation } from "@/utils/geoLocation";
 
+interface Props {
+  name: string;
+  session: string;
+}
 
 const loader = new Loader({
   apiKey: "AIzaSyAyIr3ZBmZUMAi9kZML91y3JlLc8sFYmPw",
   version: "weekly",
-  libraries: ["places"]
+  libraries: ["places"],
 });
 
 const mapOptions = {
@@ -44,14 +49,13 @@ const landmarks = {
   },
 };
 
-
-function MapDisplay() {
+function MapDisplay({ name, session }: Props) {
   const mapContainerRef = useRef(null);
 
   function getRandomArbitrary(min: number, max: number) {
     return Math.random() * (max - min) + min;
   }
-    
+
   // needs to take a landmark as a parameter
   useEffect(() => {
     loader.load().then(() => {
@@ -65,11 +69,15 @@ function MapDisplay() {
             fillColor: "#6080b8",
             fillOpacity: 0.35,
             map: map,
-            
+
             center: {
-                lat: landmarks[city].center.lat + getRandomArbitrary(-0.0008, 0.0008),
-                lng: landmarks[city].center.lng + getRandomArbitrary(-0.0008, 0.0008)
-              },
+              lat:
+                landmarks[city].center.lat +
+                getRandomArbitrary(-0.0008, 0.0008),
+              lng:
+                landmarks[city].center.lng +
+                getRandomArbitrary(-0.0008, 0.0008),
+            },
             radius: 200,
           });
         }
@@ -77,14 +85,43 @@ function MapDisplay() {
     });
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const { latitude, longitude } = await fetchLocation();
+      const data = {
+        name,
+        latitude,
+        longitude,
+      };
+      await fetch("/api/user", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    };
+
+    // const interval = setInterval(() => fetchData(), 2000);
+
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  });
+
   return (
-    <div className="relative h-screen"> 
+    <div className="relative h-screen">
+      <h1 className="font-medium text-lg text-black p-2">
+        session: <span className="font-bold ">{session} </span> user:{" "}
+        <span className="font-bold">{name}</span>
+      </h1>
+
       <div className="w-full h-full border z-0" ref={mapContainerRef}>
         {/* Google Map occupies full container */}
       </div>
       <div className="absolute bottom-0 left-0 right-0 flex p-2 z-10">
-        <Alerts/>
-        <Leaderboard/>
+        <Alerts />
+        <Leaderboard />
       </div>
     </div>
   );

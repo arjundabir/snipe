@@ -3,31 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { setCookie } from "cookies-next";
-
-interface Location {
-  latitude: number;
-  longitude: number;
-}
-
-const fetchLocation = () => {
-  return new Promise<Location>((resolve, reject) => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          resolve({ latitude, longitude }); // Resolve the promise with the coordinates
-        },
-        (error) => {
-          console.error("Geolocation error:", error);
-          reject(error); // Reject the promise if there's an error
-        }
-      );
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-      reject(new Error("Geolocation is not supported by this browser."));
-    }
-  });
-};
+import { fetchLocation } from "@/utils/geoLocation";
 
 const Form = () => {
   const [lat, setLat] = useState(0);

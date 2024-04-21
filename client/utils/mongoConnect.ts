@@ -45,16 +45,33 @@ export async function addUser(name: string, session: string, lat:Number, lng: Nu
         } 
 }
 
+export async function findUser(name: string) {
+    try {
+        const user = await User.findOne({ name });
+        if (user) {
+            console.log("User found:", user);
+            return user;
+        } else {
+            console.log("User not found.");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error finding user:", error);
+        return null;
+    }
+}
 
-export async function updateLocation(name: string, session: string, lat:Number, lng: Number){
+
+export async function updateLocation(name: string, lat:Number, lng: Number){
     try {
                 // Update the location if the same user and session are found
                 const updatedUser = await User.findOneAndUpdate(
-                    { name, session }, // Match user and session
+                    { name }, // Match user and session
                     { $set: { 'location.lat': lat, 'location.lng': lng } }, // Update location fields
                     { new: true } // Return the updated document
                 );
                 console.log("User location updated successfully:", updatedUser);
+                return updatedUser
             } catch (updateError) {
                 console.error("Error updating user location:", updateError);
             }
