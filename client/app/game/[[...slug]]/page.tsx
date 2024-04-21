@@ -25,9 +25,9 @@ const page = ({ params: { slug }, searchParams: { name } }: Props) => {
       <div className="w-screen h-screen flex justify-center items-center">
         <h1 className="font-medium text-2xl">
           Join Session:{" "}
-          <Link href={`/game/LAHACKS?name=${name}`}>
+          <Link href={`/map`}>
             <span className="font-bold bg-gradient-to-r from-primary to-secondary inline-block text-transparent bg-clip-text border-b">
-              LAHACKS
+              LOBBY 1
             </span>
           </Link>
         </h1>

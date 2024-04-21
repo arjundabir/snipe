@@ -7,8 +7,7 @@ const Form = () => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const nameInput = form.elements.namedItem("name") as HTMLInputElement;
-    const sessionInput = form.elements.namedItem("session") as HTMLInputElement;
-    router.push(`/game/${sessionInput.value}?name=${nameInput.value}`);
+    router.push(`/game/${"false"}?name=${nameInput.value}`);
 
     // Handle form submission logic here
   };
@@ -22,14 +21,6 @@ const Form = () => {
           type="text"
           placeholder="Enter your Name"
           name="name"
-          className="input input-ghost w-full max-w-xs"
-          required
-        />
-
-        <input
-          type="text"
-          placeholder="Enter Session"
-          name="session"
           className="input input-ghost w-full max-w-xs"
           required
         />
