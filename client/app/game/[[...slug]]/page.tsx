@@ -24,7 +24,7 @@ const page = ({ params: { slug }, searchParams: { name } }: Props) => {
     </div>
   ) : (
     <>
-      <div className="w-screen h-screen flex flex-row justify-center items-center">
+      <div className="w-screen h-screen flex flex-grid justify-center items-center">
         <Link href={`/map`} className="mr-16">
             <ScavengerHunt/>
         </Link>
